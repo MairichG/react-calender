@@ -1,0 +1,23 @@
+.main
+{
+    display: inline-flex;
+    padding: var(--r3);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: var(--r2);
+    background: rgba(255, 56, 60, 0.19);
+}
+
+.text
+{
+    color: #FF7C7E;
+
+    text-align: center;
+    font-family: var(--font-main);
+    font-size: var(--p3);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

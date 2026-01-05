@@ -1,0 +1,7 @@
+.main
+{
+    display: flex;
+    width: 1192px;
+    align-items: flex-start;
+    gap: 12px;
+}
