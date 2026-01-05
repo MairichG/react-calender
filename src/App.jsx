@@ -1,7 +1,7 @@
 import "./App.css";
 import TaskListComponent from "./components/MainContent/TaskList/taskList.jsx";
 import TypeView from "./components/MainContent/TypeView/typeView.jsx";
-import SideBarSelectComponent from "./components/SideBar/SideBarSelect/sideBarSelectIco.jsx";
+//import SideBarSelectComponent from "./components/SideBar/SideBarSelect/sideBarSelectIco.jsx";
 
 function App() {
   const tags = ["Homework"];
@@ -11,9 +11,7 @@ function App() {
       <main className="App">
         <div className="sidebar">
           <div className="profile"></div>
-          <div className="selectBar">
-            <SideBarSelectComponent />
-          </div>
+
           <div className="borderLine"></div>
         </div>
 
@@ -24,7 +22,9 @@ function App() {
           </div>
 
           <div className="typeViewBar">
-            <div className="typeView"><TypeView /></div>
+            <div className="typeView">
+              <TypeView />
+            </div>
             <div className="snfSelect"></div>
           </div>
 
