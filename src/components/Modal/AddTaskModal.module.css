@@ -53,6 +53,12 @@
     box-shadow 180ms ease;
 }
 
+.select {
+  padding-left: 12px !important;
+  padding-right: 32px;
+  text-indent: 0;
+}
+
 .field:hover .control,
 .field:focus-within .control {
   background: var(--color2-5, #262626);

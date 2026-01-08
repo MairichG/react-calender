@@ -190,7 +190,7 @@ function AddTaskModal({
             </label>
             <select
               id="task-day"
-              className={styles.control}
+              className={`${styles.control} ${styles.select}`}
               value={selectedDayId}
               onChange={(event) => setSelectedDayId(event.target.value)}
             >
