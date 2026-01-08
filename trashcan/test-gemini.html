@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager v.0.2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #09090b;
+        color: #e4e4e7;
+      }
+
+      /* Скроллбар для красоты */
+      ::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #18181b;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #3f3f46;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #52525b;
+      }
+
+      .glass-card {
+        background-color: #18181b;
+        border: 1px solid #27272a;
+      }
+      .glass-card:hover {
+        border-color: #3f3f46;
+      }
+
+      /* Скрытие модалки */
+      .modal-hidden {
+        display: none;
+      }
+      .modal-flex {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body class="h-screen flex overflow-hidden">
+    <aside
+      class="w-16 flex flex-col items-center py-6 border-r border-zinc-800 bg-[#0c0c0e]"
+    >
+      <div
+        class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 mb-8 flex items-center justify-center font-bold text-white"
+      >
+        TM
+      </div>
+      <nav class="flex flex-col gap-6 text-xl text-gray-500">
+        <a href="#" class="hover:text-blue-500 transition"
+          ><i class="fas fa-home"></i
+        ></a>
+        <a href="#" class="text-blue-500 bg-blue-500/10 p-2 rounded-lg"
+          ><i class="fas fa-calendar-alt"></i
+        ></a>
+        <a href="#" class="hover:text-blue-500 transition"
+          ><i class="fas fa-chart-pie"></i
+        ></a>
+        <a href="#" class="hover:text-blue-500 transition"
+          ><i class="fas fa-cog"></i
+        ></a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0">
+      <header
+        class="h-20 border-b border-zinc-800 flex items-center justify-between px-8 bg-[#09090b]"
+      >
+        <div class="flex items-baseline gap-4">
+          <h1 class="text-2xl font-bold text-white">
+            Task-Manager
+            <span class="text-gray-500 text-lg font-normal">v.0.2</span>
+          </h1>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <div
+            class="flex items-center gap-3 bg-zinc-900 px-4 py-2 rounded-lg border border-zinc-800"
+          >
+            <span class="text-xs text-gray-400 uppercase tracking-wide"
+              >Дневной лимит (ч):</span
+            >
+            <input
+              type="number"
+              id="dailyLimitInput"
+              value="8"
+              class="w-12 bg-transparent text-white font-bold text-center outline-none border-b border-zinc-700 focus:border-blue-500 transition"
+            />
+          </div>
+
+          <div class="flex bg-zinc-900 p-1 rounded-lg border border-zinc-800">
+            <button
+              class="px-4 py-1.5 text-sm rounded-md text-gray-400 hover:text-white transition"
+            >
+              Rows
+            </button>
+            <button
+              class="px-4 py-1.5 text-sm rounded-md bg-zinc-800 text-white shadow font-medium"
+            >
+              Columns
+            </button>
+            <button
+              class="px-4 py-1.5 text-sm rounded-md text-gray-400 hover:text-white transition"
+            >
+              Table
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="flex-1 overflow-x-auto overflow-y-hidden p-8">
+        <div id="board" class="flex gap-6 h-full pb-4"></div>
+      </div>
+    </main>
+
+    <div
+      id="taskModal"
+      class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 modal-hidden justify-center items-center"
+    >
+      <div
+        class="bg-[#18181b] border border-zinc-700 w-full max-w-md rounded-2xl p-6 shadow-2xl relative"
+      >
+        <button
+          onclick="closeModal()"
+          class="absolute top-4 right-4 text-gray-500 hover:text-white"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+
+        <h2 class="text-xl font-bold text-white mb-6">Новая задача</h2>
+
+        <form id="addTaskForm" class="space-y-4">
+          <input type="hidden" id="modalDateHidden" />
+
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Название</label>
+            <input
+              type="text"
+              id="inputTitle"
+              placeholder="Напр. Сделать домашку"
+              class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:border-blue-500 outline-none transition"
+              required
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1"
+                >Длительность (часов)</label
+              >
+              <input
+                type="number"
+                step="0.5"
+                id="inputHours"
+                value="1"
+                class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:border-blue-500 outline-none transition"
+                required
+              />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1"
+                >Категория (Тег)</label
+              >
+              <input
+                type="text"
+                id="inputTag"
+                placeholder="Design, Code..."
+                class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:border-blue-500 outline-none transition"
+              />
+            </div>
+          </div>
+
+          <div
+            class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 flex items-center justify-between cursor-pointer"
+            onclick="document.getElementById('inputMandatory').click()"
+          >
+            <div>
+              <span class="block text-sm text-white font-medium"
+                >Обязательная задача?</span
+              >
+              <span class="text-xs text-gray-500">Влияет на лимит дня</span>
+            </div>
+            <input
+              type="checkbox"
+              id="inputMandatory"
+              class="w-5 h-5 accent-blue-500"
+              checked
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg mt-4 transition shadow-lg shadow-blue-500/20"
+          >
+            Добавить задачу
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // --- Данные ---
+      let tasks = JSON.parse(localStorage.getItem("tm_tasks")) || [];
+      let dailyLimit = parseInt(localStorage.getItem("tm_limit")) || 8;
+
+      const board = document.getElementById("board");
+      const modal = document.getElementById("taskModal");
+      const limitInput = document.getElementById("dailyLimitInput");
+
+      // --- Инициализация ---
+      limitInput.value = dailyLimit;
+      renderBoard();
+
+      // --- События ---
+      limitInput.addEventListener("change", (e) => {
+        dailyLimit = parseInt(e.target.value);
+        localStorage.setItem("tm_limit", dailyLimit);
+        renderBoard();
+      });
+
+      document.getElementById("addTaskForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addNewTask();
+      });
+
+      // --- Функции ---
+
+      function openModal(dateStr) {
+        document.getElementById("modalDateHidden").value = dateStr;
+        // Очистка формы
+        document.getElementById("inputTitle").value = "";
+        document.getElementById("inputHours").value = "1";
+        document.getElementById("inputTag").value = "";
+
+        modal.classList.remove("modal-hidden");
+        modal.classList.add("modal-flex");
+        document.getElementById("inputTitle").focus();
+      }
+
+      function closeModal() {
+        modal.classList.add("modal-hidden");
+        modal.classList.remove("modal-flex");
+      }
+
+      function addNewTask() {
+        const title = document.getElementById("inputTitle").value;
+        const hours = parseFloat(document.getElementById("inputHours").value);
+        const tag = document.getElementById("inputTag").value || "General";
+        const mandatory = document.getElementById("inputMandatory").checked;
+        const date = document.getElementById("modalDateHidden").value;
+
+        const task = {
+          id: Date.now(),
+          title,
+          hours,
+          tag,
+          mandatory,
+          date,
+        };
+
+        tasks.push(task);
+        saveData();
+        renderBoard();
+        closeModal();
+      }
+
+      function deleteTask(id) {
+        if (confirm("Удалить задачу?")) {
+          tasks = tasks.filter((t) => t.id !== id);
+          saveData();
+          renderBoard();
+        }
+      }
+
+      function saveData() {
+        localStorage.setItem("tm_tasks", JSON.stringify(tasks));
+      }
+
+      // --- Главная логика рендера (Колонки) ---
+      function renderBoard() {
+        board.innerHTML = "";
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Генерируем 14 дней
+        for (let i = 0; i < 14; i++) {
+          const currentDate = new Date(today);
+          currentDate.setDate(today.getDate() + i);
+          const dateStr = currentDate.toISOString().split("T")[0];
+
+          // Фильтр задач для этого дня
+          const dayTasks = tasks.filter((t) => t.date === dateStr);
+
+          // Подсчет часов
+          let mandatorySum = 0;
+          let totalSum = 0;
+          dayTasks.forEach((t) => {
+            totalSum += t.hours;
+            if (t.mandatory) mandatorySum += t.hours;
+          });
+
+          // Вычисления для UI
+          const isOverload = mandatorySum > dailyLimit;
+          const progressPercent = Math.min(
+            (mandatorySum / dailyLimit) * 100,
+            100
+          );
+          const progressColor = isOverload ? "bg-red-500" : "bg-blue-500";
+          const dayName = currentDate.toLocaleDateString("en-US", {
+            weekday: "long",
+          }); // English как на скрине
+          const dayDate = currentDate.toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "short",
+          });
+
+          // Создаем колонку
+          const col = document.createElement("div");
+          col.className = "min-w-[320px] w-[320px] flex flex-col h-full";
+
+          // HTML Колонки
+          col.innerHTML = `
+                    <div class="glass-card p-4 rounded-xl mb-4 relative group">
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-1 h-4 ${
+                                  isOverload ? "bg-red-500" : "bg-blue-500"
+                                } rounded-full"></div>
+                                <h3 class="font-semibold text-white">${dayName}</h3>
+                                <span class="text-xs text-gray-500">${dayDate}</span>
+                            </div>
+                            <button onclick="openModal('${dateStr}')" class="w-6 h-6 rounded flex items-center justify-center text-gray-400 hover:bg-zinc-700 hover:text-white transition">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Mandatory Load</span>
+                            <span class="${
+                              isOverload ? "text-red-400 font-bold" : ""
+                            }">${mandatorySum}h / ${dailyLimit}h</span>
+                        </div>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                            <div class="${progressColor} h-full transition-all duration-500" style="width: ${progressPercent}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto pr-1 space-y-3">
+                        ${dayTasks
+                          .map(
+                            (task) => `
+                            <div class="glass-card p-4 rounded-xl cursor-pointer relative group hover:shadow-lg hover:shadow-black/40 transition">
+                                <button onclick="deleteTask(${
+                                  task.id
+                                })" class="absolute top-2 right-2 text-zinc-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition p-1">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                                
+                                <div class="mb-3">
+                                    <h4 class="text-sm font-medium text-gray-200 line-clamp-2">${
+                                      task.title
+                                    }</h4>
+                                </div>
+                                
+                                <div class="w-full bg-zinc-800 rounded-full h-1 mb-3">
+                                    <div class="bg-blue-500/50 h-full w-1/2 rounded-full"></div>
+                                </div>
+
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-[10px] px-2 py-1 rounded bg-[#2a1b1b] text-red-400 border border-red-900/30">
+                                        ${task.tag}
+                                    </span>
+                                    <div class="text-xs text-gray-500 font-mono">
+                                        <i class="far fa-clock mr-1"></i>${
+                                          task.hours
+                                        }h ${
+                              task.mandatory
+                                ? '<i class="fas fa-exclamation-circle text-red-500 ml-1" title="Mandatory"></i>'
+                                : ""
+                            }
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                        
+                        ${
+                          dayTasks.length === 0
+                            ? `
+                            <div onclick="openModal('${dateStr}')" class="border-2 border-dashed border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center text-zinc-600 hover:border-zinc-600 hover:text-zinc-500 transition cursor-pointer h-32">
+                                <i class="fas fa-plus mb-2"></i>
+                                <span class="text-xs">Free Day</span>
+                            </div>
+                        `
+                            : ""
+                        }
+                    </div>
+                `;
+
+          board.appendChild(col);
+        }
+      }
+    </script>
+  </body>
+</html>

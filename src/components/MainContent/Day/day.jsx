@@ -1,62 +1,72 @@
-import React from 'react';
-import styles from './day.module.css';
+import React from "react";
+import styles from "./day.module.css";
 import TaskComponent from "../Task/task.jsx";
 import addIcon from "../../../assets/MainContent/Day/AddIcon.svg";
+import { formatMinutes } from "../../../scripts/time.js";
+import { getCumulativeStats } from "../../../scripts/planner.js";
 
+function DayComponent({
+  day,
+  tasks,
+  onAddTask,
+  onEditTask,
+  index,
+  dayWindow,
+  tasksByDay,
+  dayCaps,
+}) {
+  const { usedMin, capMin, pct } = getCumulativeStats(
+    index,
+    dayWindow,
+    tasksByDay,
+    dayCaps
+  );
+  const spentMin = tasks.reduce((sum, task) => sum + (task?.spentMin || 0), 0);
+  const rawPct = pct;
+  const fillPct = rawPct > 0 ? Math.max(rawPct, 8) : 0;
+  const timeLabel = `${formatMinutes(usedMin)} / ${formatMinutes(capMin)}`;
 
-function DayComponent({tags}) {
   return (
     <main className={styles.main}>
         <div className={styles.titleFrame}>
-            <img src={addIcon} alt="addIcon" className={styles.addIcon}/>
-            <div className={styles.timeFrame}>
-                <div className={styles.timeSVG}>
-                    <div style={{
-                        width: "99px",
-                        height: "5px",
-                        borderRadius: "6px",
-                        background: "var(--color-25, #262626)"
-                    }}></div>
-
-                    <div style={{
-                        position: "absolute",
-                        top: "0px",
-                        width: "44px",
-                        height: "5px",
-                        borderRadius: "6px",
-                        background: "var(--color-3, #373737)"
-                    }}></div>
-                </div>
-                <div className={styles.time}>1h30m/2h</div>
+            <div className={styles.top}>
+              <div className={styles.rectFrame}></div>
+              <div className={styles.title}>{day.label}</div>
+              <img
+                src={addIcon}
+                alt="addIcon"
+                className={styles.addIcon}
+                onClick={() => onAddTask?.(day.id)}
+              />
             </div>
-            <div className={styles.title}>Monday</div>
-            <div className={styles.rectFrame}></div>
+            <div className={styles.time}>{timeLabel}</div>
+            <div className={styles.progressBar}>
+              <div className={styles.progressBar1}></div>
+              <div
+                className={styles.progressBar2}
+                style={{ width: `${fillPct}%` }}
+              ></div>
+            </div>
         </div>
 
-        <div className={styles.tasksFrame}>
-            <TaskComponent
-                title="Do a Homework"
-                description={`
-                            блаблабла`}
-                time="1h30m/2h"
-                tags={tags}
-            />
-            <TaskComponent
-                title="Do a Homework"
-                description={`
-                            блаблабла`}
-                time="1h30m/2h"
-                tags={tags}
-            />
-
-            <TaskComponent
-                title="Do a Homework"
-                description={`
-                            блаблабла`}
-                time="1h30m/2h"
-                tags={tags}
-            />
-        </div>
+        {tasks.length > 0 && (
+          <div className={styles.tasksFrame}>
+            {tasks.map((task) => (
+              <TaskComponent
+                key={task.id}
+                title={task.title}
+                description={task.description}
+                time={`${formatMinutes(task.spentMin || 0)} / ${formatMinutes(
+                  task.requiredMin || 0
+                )}`}
+                tags={task.tags || (task.tag ? [task.tag] : [])}
+                requiredMin={task.requiredMin}
+                spentMin={task.spentMin}
+                onClick={() => onEditTask?.(day.id, task.id)}
+              />
+            ))}
+          </div>
+        )}
     </main>
   );
 }

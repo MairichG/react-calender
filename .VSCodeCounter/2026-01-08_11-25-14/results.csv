@@ -1,0 +1,34 @@
+"filename", "language", "HTML", "XML", "JavaScript JSX", "JavaScript", "PostCSS", "JSON", "Markdown", "comment", "blank", "total"
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 9, 0, 8, 17
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/eslint.config.js", "JavaScript", 0, 0, 0, 28, 0, 0, 0, 0, 2, 30
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/index.html", "HTML", 13, 0, 0, 0, 0, 0, 0, 0, 1, 14
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/package-lock.json", "JSON", 0, 0, 0, 0, 0, 3323, 0, 0, 1, 3324
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/package.json", "JSON", 0, 0, 0, 0, 0, 28, 0, 0, 1, 29
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/public/vite.svg", "XML", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/App.css", "PostCSS", 0, 0, 0, 0, 107, 0, 0, 9, 25, 141
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/App.jsx", "JavaScript JSX", 0, 0, 256, 0, 0, 0, 0, 1, 25, 282
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/assets/MainContent/Day/AddIcon.svg", "XML", 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/assets/SideBar/SelectIcons/CalenderIcon.svg", "XML", 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/assets/SideBar/SelectIcons/DocumentIcon.svg", "XML", 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/assets/SideBar/SelectIcons/HomeIcon.svg", "XML", 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/Day/day.jsx", "JavaScript JSX", 0, 0, 70, 0, 0, 0, 0, 0, 5, 75
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/Day/day.module.css", "PostCSS", 0, 0, 0, 0, 100, 0, 0, 5, 20, 125
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/Tag/tag.jsx", "JavaScript JSX", 0, 0, 10, 0, 0, 0, 0, 0, 2, 12
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/Tag/tag.module.css", "PostCSS", 0, 0, 0, 0, 20, 0, 0, 0, 3, 23
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/Task/task.jsx", "JavaScript JSX", 0, 0, 57, 0, 0, 0, 0, 0, 8, 65
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/Task/task.module.css", "PostCSS", 0, 0, 0, 0, 111, 0, 0, 6, 27, 144
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/TaskList/taskList.jsx", "JavaScript JSX", 0, 0, 29, 0, 0, 0, 0, 0, 3, 32
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/TaskList/taskList.module.css", "PostCSS", 0, 0, 0, 0, 7, 0, 0, 0, 0, 7
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/TypeView/typeView.jsx", "JavaScript JSX", 0, 0, 52, 0, 0, 0, 0, 0, 11, 63
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/MainContent/TypeView/typeView.module.css", "PostCSS", 0, 0, 0, 0, 35, 0, 0, 0, 9, 44
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/components/Modal/AddTaskModal.jsx", "JavaScript JSX", 0, 0, 276, 0, 0, 0, 0, 0, 25, 301
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/index.css", "PostCSS", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/main.jsx", "JavaScript JSX", 0, 0, 9, 0, 0, 0, 0, 0, 2, 11
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/scripts/date.js", "JavaScript", 0, 0, 0, 31, 0, 0, 0, 0, 4, 35
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/scripts/planner.js", "JavaScript", 0, 0, 0, 69, 0, 0, 0, 4, 12, 85
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/scripts/storage.js", "JavaScript", 0, 0, 0, 24, 0, 0, 0, 1, 3, 28
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/src/scripts/time.js", "JavaScript", 0, 0, 0, 42, 0, 0, 0, 4, 8, 54
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/trashcan/test-chatgpt.html", "HTML", 1102, 0, 0, 0, 0, 0, 0, 2, 112, 1216
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/trashcan/test-gemini.html", "HTML", 380, 0, 0, 0, 0, 0, 0, 0, 44, 424
+"/Users/mairgigolaev/Mair/Vs-Code-Files/react-calender/vite.config.js", "JavaScript", 0, 0, 0, 6, 0, 0, 0, 1, 2, 9
+"Total", "-", 1495, 34, 759, 200, 380, 3351, 9, 33, 368, 6629

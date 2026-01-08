@@ -50,6 +50,7 @@ body,
 #root {
   margin: 0;
   padding: 0;
+  background-color: var(--color0);
 }
 
 .page {
@@ -58,7 +59,6 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color0);
 }
 
 .App {
@@ -76,6 +76,30 @@ body,
   top: 0px;
   bottom: 0px;
   width: 64px;
+}
+
+.profile
+{
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  top: 64px;
+  left: 12px;
+}
+
+.borderLine
+{
+  position: absolute;
+  top: 32px;
+  bottom: 32px;
+  left: 63px;
+
+  background: #373737;
+  display: flex;
+  width: 1px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .mainContent {
@@ -137,4 +161,7 @@ body,
   position: absolute;
   top: 171px;
   left: 24px;
+  right: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
 }

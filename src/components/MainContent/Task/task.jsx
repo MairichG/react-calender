@@ -2,10 +2,21 @@ import React from "react";
 import { useRef, useState } from "react";
 import styles from "./task.module.css";
 import TagComponent from "../Tag/tag.jsx";
+import { taskProgressPct } from "../../../scripts/planner.js";
 
-function TaskComponent({ title, description, time, tags }) {
+function TaskComponent({
+  title,
+  description,
+  time,
+  tags,
+  requiredMin,
+  spentMin,
+  onClick,
+}) {
   const t = useRef(null);
   const [peek, setPeek] = useState(false);
+  const rawPct = taskProgressPct({ requiredMin, spentMin });
+  const fillPct = rawPct > 0 ? Math.max(rawPct, 8) : 0;
 
   return (
      <main
@@ -17,21 +28,24 @@ function TaskComponent({ title, description, time, tags }) {
       onMouseLeave={() => {
         clearTimeout(t.current);
         setPeek(false);
-      }}>
+      }}
+      onClick={onClick}
+    >
       <div className={styles.TnI}>
         <div className={styles.title}>{title}</div>
 
         <div className={styles.timeFrame}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="88"
-            height="5"
-            viewBox="0 0 88 5"
-            fill="none"
+          <div
+            className={styles.taskProgress}
+            data-peek={peek ? "true" : "false"}
           >
-            <rect width="88" height="5" rx="2.5" fill="#262626" />
-            <rect width="33" height="5" rx="2.5" fill="#0088FF" />
-          </svg>
+            <div className={styles.taskProgressBg}></div>
+            <div
+              className={styles.taskProgressFill}
+              style={{ width: `${fillPct}%` }}
+            ></div>
+          </div>
+
           <div className={styles.time}>{time}</div>
         </div>
 

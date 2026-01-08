@@ -13,45 +13,55 @@
 
 .titleFrame
 {
+    min-width: 200px;
     position: relative;
-    width: 100%;
-    height: 68px;
+    display: flex;
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
     align-self: stretch;
 
     border-radius: 12px;
-    border: 1px solid var(--сolor3, #373737);
-    background: var(--сolor2, #171717);
+    border: 1px solid var(--color3, #373737);
+    background: var(--color2, #171717);
+}
+
+.top
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .addIcon {
     position: absolute;
     top: 12px;
-    left: 168px;
-
+    right: 12px;
 
     width: var(--IconSIze, 20px);
     height: 20px;
     aspect-ratio: 1/1;
 }
 
-.timeFrame
+.title
 {
-    position: absolute;
-    top: 41px;
-    left: 12px;
-
-    display: flex;
-    width: 176px;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+    width: 127px;
+    
+    color: var(--Color8, #FFF);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
-.timeSVG
+.rectFrame
 {
-    position: relative;
-    height: 5px;
-    flex: 1 0 0;
+    width: 5px;
+    height: 24px;
+    border-radius: 7px;
+    background: var(--Accents-Blue, #08F);
 }
 
 .time
@@ -69,35 +79,39 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-
 }
 
-.title
-{
-    position: absolute;
-    top: 15px;
-    left: 29px;
-
-    width: 127px;
-    color: var(--color8, #FFF);
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+/* контейнер прогресс-бара (completeBar) */
+.progressBar {
+  position: relative;
+  width: 100%;      /* вместо фикс 176px */
+  height: 5px;
+  flex: 1 1 auto;   /* аналог flex-grow: 1 */
 }
 
-.rectFrame
-{
-    position: absolute;
-    top: 12px;
-    left: 12px;
+/* Rectangle 8 — фон (серый) */
+.progressBar1 {
+  position: absolute;
+  inset: 0; /* left:0; right:0; top:0; bottom:0 */
+  background: var(--color2-5, #262626);
+  border-radius: 6px;
+}
 
-    width: 5px;
-    height: 24px;
+/* Rectangle 9 — заливка (чуть светлее) */
+.progressBar2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
 
-    border-radius: 7px;
-    background: var(--Accents-Blue, #08F);
+  /* Вариант А: если хочешь задавать “заполнение” через проценты */
+  width: 65%; /* временно, потом подставишь из JS */
+
+  background: #0088FF;
+  border-radius: 9px;
+
+  /* чтобы заливка не вылезала за скругления фона */
+  max-width: 100%;
 }
 
 .tasksFrame
