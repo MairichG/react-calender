@@ -15,14 +15,18 @@ function DayComponent({
   tasksByDay,
   dayCaps,
 }) {
-  const { usedMin, capMin, pct } = getCumulativeStats(
+  const { usedMin, capMin } = getCumulativeStats(
     index,
     dayWindow,
     tasksByDay,
     dayCaps
   );
-  const spentMin = tasks.reduce((sum, task) => sum + (task?.spentMin || 0), 0);
-  const rawPct = pct;
+  const isOverflow = usedMin > capMin;
+  const rawPct = isOverflow
+    ? 100
+    : capMin > 0
+    ? Math.min(usedMin / capMin, 1) * 100
+    : 0;
   const fillPct = rawPct > 0 ? Math.max(rawPct, 8) : 0;
   const timeLabel = `${formatMinutes(usedMin)} / ${formatMinutes(capMin)}`;
 
@@ -39,12 +43,26 @@ function DayComponent({
                 onClick={() => onAddTask?.(day.id)}
               />
             </div>
-            <div className={styles.time}>{timeLabel}</div>
+            <div
+              className={styles.time}
+              style={{
+                color: isOverflow
+                  ? "var(--Accents-Red, #ff4d4f)"
+                  : undefined,
+              }}
+            >
+              {timeLabel}
+            </div>
             <div className={styles.progressBar}>
               <div className={styles.progressBar1}></div>
               <div
                 className={styles.progressBar2}
-                style={{ width: `${fillPct}%` }}
+                style={{
+                  width: `${fillPct}%`,
+                  background: isOverflow
+                    ? "var(--Accents-Red, #ff4d4f)"
+                    : "var(--Accents-Blue, #0088FF)",
+                }}
               ></div>
             </div>
         </div>

@@ -13,6 +13,15 @@ export const sumSpentMinutes = (tasks = []) =>
     0
   );
 
+export const remainingTaskMinutes = (task) => {
+  const requiredMin = clampMin(task?.requiredMin ?? task?.plannedMinutes ?? 0);
+  const spentMin = clampMin(task?.spentMin ?? task?.spentMinutes ?? 0);
+  return Math.max(requiredMin - spentMin, 0);
+};
+
+export const sumRemainingMinutes = (tasks = []) =>
+  tasks.reduce((sum, task) => sum + remainingTaskMinutes(task), 0);
+
 export const getDayStats = ({ tasks = [], dayCapacityMin = 0 } = {}) => {
   const requiredMin = sumTaskMinutes(tasks);
   const spentMin = sumSpentMinutes(tasks);
@@ -69,7 +78,7 @@ export const getCumulativeStats = (
       continue;
     }
     const tasks = Array.isArray(tasksByDay[dayId]) ? tasksByDay[dayId] : [];
-    usedMin += sumTaskMinutes(tasks);
+    usedMin += sumRemainingMinutes(tasks);
     const cap = dayCaps?.[dayId];
     capMin += Number.isFinite(cap) ? cap : 0;
   }
