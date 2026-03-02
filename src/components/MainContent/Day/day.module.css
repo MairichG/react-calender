@@ -9,6 +9,13 @@
 
     border-radius: 24px;
     background: var(--color1, #0A0A0A);
+    transition: box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.main[data-over="true"]
+{
+    box-shadow: inset 0 0 0 1px var(--Accents-Blue, #08F);
+    background: var(--color2, #171717);
 }
 
 .titleFrame
@@ -120,5 +127,5 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 12px;
+    transition: opacity 160ms ease;
 }
-

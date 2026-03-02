@@ -1,4 +1,9 @@
 import React from "react";
+import { useDroppable } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import styles from "./day.module.css";
 import TaskComponent from "../Task/task.jsx";
 import addIcon from "../../../assets/MainContent/Day/AddIcon.svg";
@@ -14,7 +19,10 @@ function DayComponent({
   dayWindow,
   tasksByDay,
   dayCaps,
+  isDragging,
 }) {
+  const { setNodeRef, isOver } = useDroppable({ id: day.id });
+
   const { usedMin, capMin } = getCumulativeStats(
     index,
     dayWindow,
@@ -31,7 +39,11 @@ function DayComponent({
   const timeLabel = `${formatMinutes(usedMin)} / ${formatMinutes(capMin)}`;
 
   return (
-    <main className={styles.main}>
+    <main
+      ref={setNodeRef}
+      className={styles.main}
+      data-over={isOver ? "true" : "false"}
+    >
         <div className={styles.titleFrame}>
             <div className={styles.top}>
               <div className={styles.rectFrame}></div>
@@ -69,20 +81,27 @@ function DayComponent({
 
         {tasks.length > 0 && (
           <div className={styles.tasksFrame}>
-            {tasks.map((task) => (
-              <TaskComponent
-                key={task.id}
-                title={task.title}
-                description={task.description}
-                time={`${formatMinutes(task.spentMin || 0)} / ${formatMinutes(
-                  task.requiredMin || 0
-                )}`}
-                tags={task.tags || (task.tag ? [task.tag] : [])}
-                requiredMin={task.requiredMin}
-                spentMin={task.spentMin}
-                onClick={() => onEditTask?.(day.id, task.id)}
-              />
-            ))}
+            <SortableContext
+              items={tasks.map((task) => task.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {tasks.map((task) => (
+                <TaskComponent
+                  key={task.id}
+                  taskId={task.id}
+                  title={task.title}
+                  description={task.description}
+                  time={`${formatMinutes(task.spentMin || 0)} / ${formatMinutes(
+                    task.requiredMin || 0
+                  )}`}
+                  tags={task.tags || (task.tag ? [task.tag] : [])}
+                  requiredMin={task.requiredMin}
+                  spentMin={task.spentMin}
+                  isDragging={isDragging}
+                  onClick={() => onEditTask?.(day.id, task.id)}
+                />
+              ))}
+            </SortableContext>
           </div>
         )}
     </main>

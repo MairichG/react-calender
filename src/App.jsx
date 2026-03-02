@@ -5,6 +5,7 @@ import TypeView from "./components/MainContent/TypeView/typeView.jsx";
 import { loadPlanner, savePlanner } from "./scripts/storage.js";
 import AddTaskModal from "./components/Modal/AddTaskModal.jsx";
 import { buildDayWindow, dateKey, getWindowStart } from "./scripts/date.js";
+import { moveTask } from "./scripts/dnd.js";
 //import SideBarSelectComponent from "./components/SideBar/SideBarSelect/sideBarSelectIco.jsx";
 
 import avatar from "./assets/SideBar/ProfileIco/simpleGLEBico.png";
@@ -238,6 +239,16 @@ function App() {
     handleCancelAdd();
   };
 
+  const handleMoveTask = (activeId, overId) => {
+    if (!activeId || !overId) {
+      return;
+    }
+    setPlannerData((prev) => ({
+      ...prev,
+      tasksByDay: moveTask(prev.tasksByDay, activeId, overId),
+    }));
+  };
+
   const activeTask =
     activeDayId && activeTaskId
       ? plannerData.tasksByDay[activeDayId]?.find(
@@ -274,6 +285,7 @@ function App() {
               tasksByDay={plannerData.tasksByDay}
               onAddTask={handleOpenAdd}
               onEditTask={handleOpenEdit}
+              onMoveTask={handleMoveTask}
               dayCaps={plannerData.dayCaps}
             />
           </div>
